@@ -47,7 +47,7 @@ public class DemoApplication {
 		String search_str = searchQuery.trim().replace(" ", "+");
 		Document doc = null;
 		List<Model> modelList = new ArrayList<>();
-		Model model = new Model();
+
 
 
 
@@ -64,6 +64,7 @@ public class DemoApplication {
 				photo_url_str=el_img.attr("src");
 				title_str=el_img.attr("title");
 				videoid_str=getVideoIdfromImgUrl(photo_url_str);
+				Model model = new Model();
 				model.setPhoto_url_list(photo_url_str);
 				model.setVideo_id_list(videoid_str);
 				model.setTitle_list(title_str);
