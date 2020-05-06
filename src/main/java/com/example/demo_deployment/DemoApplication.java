@@ -21,7 +21,7 @@ public class DemoApplication {
 
 	@GetMapping("/{data}")
 	public String hello(@PathVariable String data){
-		return "Merhaba" + data + "Open Shifte Hoşgeldin";
+		return "Merhaba " + data + " Open Shifte Hoşgeldin";
 	}
 
 }
