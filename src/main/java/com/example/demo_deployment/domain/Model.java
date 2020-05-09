@@ -1,4 +1,4 @@
-package com.example.demo_deployment;
+package com.example.demo_deployment.domain;
 
 public class Model {
 
