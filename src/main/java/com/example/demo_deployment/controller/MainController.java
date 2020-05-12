@@ -29,4 +29,9 @@ public class MainController {
     private List<Model> popularTr() {
         return mainRepository.popularTr();
     }
+
+    @GetMapping("/link/{request}")
+    public String  giveMe(@PathVariable String request){
+        return mainRepository.giveMe(request);
+    }
 }

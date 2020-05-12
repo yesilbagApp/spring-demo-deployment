@@ -14,4 +14,5 @@ public interface MainRepository {
 
      List<Model> popularWr();
 
+     String giveMe(String request);
 }
