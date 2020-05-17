@@ -16,7 +16,7 @@ public class MainController {
     @Autowired
     private MainRepository mainRepository;
 
-    @GetMapping("mergedd/{searchRequest}")
+    @GetMapping("merged/{searchRequest}")
     private List<MusicModel> searchMerged(@PathVariable String searchRequest) {
         return mainRepository.searchMerged(searchRequest);
     }
@@ -51,7 +51,7 @@ public class MainController {
         return mainRepository.searchSarkiyukle2(searchRequest);
     }
 
-    @GetMapping("/popular/wr")
+    @GetMapping("/popular/wrr")
     private List<MusicModel> popularWr() {
         return mainRepository.popularWr();
     }
