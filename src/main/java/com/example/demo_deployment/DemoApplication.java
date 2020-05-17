@@ -1,6 +1,6 @@
 package com.example.demo_deployment;
 
-import com.example.demo_deployment.domain.Model;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

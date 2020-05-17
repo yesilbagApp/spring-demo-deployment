@@ -1,6 +1,6 @@
 package com.example.demo_deployment.domain;
 
-public class Model2 {
+public class MusicModel {
 
     String video_id_list;
     String title_list;
@@ -30,13 +30,13 @@ public class Model2 {
         this.photo_url_list = photo_url_list;
     }
 
-    public Model2(String video_id_list, String title_list, String photo_url_list) {
+    public MusicModel(String video_id_list, String title_list, String photo_url_list) {
         this.video_id_list = video_id_list;
         this.title_list = title_list;
         this.photo_url_list = photo_url_list;
     }
 
-    public Model2(){
+    public MusicModel(){
         //default
     }
 }

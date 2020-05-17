@@ -1,6 +1,7 @@
 package com.example.demo_deployment.services;
 
-import com.example.demo_deployment.domain.Model;
+import com.example.demo_deployment.domain.ApkControlModel;
+import com.example.demo_deployment.domain.MusicModel;
 import com.example.demo_deployment.repository.MainRepository;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -10,10 +11,13 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 
+import javax.swing.text.AbstractDocument;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +29,61 @@ public class MainImpl implements MainRepository {
     private String videoId;
     private String photo;
 
-    @Override
-    public List<Model> search(String searchQuery) {
 
-        String url1 = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS9hcmFtYS8/YXJhPQ==");
+    @Override
+    public List<ApkControlModel> apkControl() {
+
+        //apkAktifPasif=true ise apkAktif çalışıyor demektir.
+        // Uygulama yayından kaldırıldıysa false yapılıp not yazılır ve yeni uygulamanın store adresi verilir.
+
+        Boolean apkAktifPasif=true;
+        String not="Yeni Uygulamamızı indirmek için tıklayınız !";
+        String yeniApkAdres="market://details?id=ts.myt.memoo";
+
+
+        List<ApkControlModel> apkControlModelList = new ArrayList<>();
+
+        try {
+            ApkControlModel model = new ApkControlModel();
+            model.setNot(not);
+            model.setYeniApkAdres(yeniApkAdres);
+            model.setApkAktifPasif(apkAktifPasif);
+            apkControlModelList.add(model);
+
+        } catch (Exception e) {
+        }
+        return apkControlModelList;
+    }
+
+    public List<MusicModel> searchMerged(String searchQuery){
+        List<MusicModel> model;
+        List<MusicModel> model1;
+        List<MusicModel> model2;
+
+
+        model1=searchSarkiyukle2(searchQuery);
+
+        if(model1.size()>0){
+            model=model1;
+        } else {
+            model=searchTbzy2(searchQuery);
+        }
+
+        return model;
+    }
+
+    @Override
+    public List<MusicModel> searchTbzy2(String searchQuery) {
+
+        //String url1 = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS9hcmFtYS8/YXJhPQ==");
+        String url1 = decodeStrings("aHR0cHM6Ly90dWJhenkuY29tLz9hcmE9");
         String search_str = searchQuery.trim().replace(" ", "+");
         Document doc = null;
-        List<Model> modelList = new ArrayList<>();
+        List<MusicModel> modelList = new ArrayList<>();
 
 
         try {
-
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
             doc = Jsoup.connect(url1 + search_str).get();
             Elements elements = doc.select("div#items > div");
 
@@ -43,7 +91,42 @@ public class MainImpl implements MainRepository {
                 photo = element.select("img").attr("src");
                 title = element.select("img").attr("title");
                 videoId = getVideoIdfromImgUrl(photo);
-                Model model = new Model();
+                if(giveMe(videoId)!=null){
+                    MusicModel model = new MusicModel();
+                    model.setPhoto_url_list(photo);
+                    model.setVideo_id_list(giveMe(videoId));
+                    model.setTitle_list(title);
+                    modelList.add(model);
+                }
+
+            }
+
+        } catch (Exception e) {
+        }
+
+        return modelList;
+    }
+
+    @Override
+    public List<MusicModel> searchTbzy(String searchQuery) {
+
+        //String url1 = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS9hcmFtYS8/YXJhPQ==");
+        String url1 = decodeStrings("aHR0cHM6Ly90dWJhenkuY29tLz9hcmE9");
+        String search_str = searchQuery.trim().replace(" ", "+");
+        Document doc = null;
+        List<MusicModel> modelList = new ArrayList<>();
+
+
+        try {
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
+            doc = Jsoup.connect(url1 + search_str).get();
+            Elements elements = doc.select("div#items > div");
+
+            for (Element element : elements) {
+                photo = element.select("img").attr("src");
+                title = element.select("img").attr("title");
+                videoId = getVideoIdfromImgUrl(photo);
+                MusicModel model = new MusicModel();
                 model.setPhoto_url_list(photo);
                 model.setVideo_id_list(videoId);
                 model.setTitle_list(title);
@@ -57,20 +140,134 @@ public class MainImpl implements MainRepository {
     }
 
     @Override
-    public List<Model> popularTr() {
+    public List<MusicModel> searchTbdy(String searchQuery) {
+
+        String url1 = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS9hcmFtYS8/YXJhPQ==");
+        String search_str = searchQuery.trim().replace(" ", "+");
+        Document doc = null;
+        List<MusicModel> modelList = new ArrayList<>();
+
+
+        try {
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
+            doc = Jsoup.connect(url1 + search_str).get();
+            Elements elements = doc.select("div#items > div");
+
+            for (Element element : elements) {
+                photo = element.select("img").attr("src");
+                title = element.select("img").attr("title");
+                videoId = getVideoIdfromImgUrl(photo);
+                MusicModel model = new MusicModel();
+                model.setPhoto_url_list(photo);
+                model.setVideo_id_list(videoId);
+                model.setTitle_list(title);
+                modelList.add(model);
+            }
+
+        } catch (Exception e) {
+        }
+
+        return modelList;
+    }
+
+    @Override
+    public List<MusicModel> searchSarkiyukle2(String searchQuery) {
+
+
+
+        String url1 = decodeStrings("aHR0cHM6Ly9zYXJraXl1a2xlaW5kaXIuY29tL2FyYW1hLnBocD9xPQ==");
+
+        String search_str = searchQuery.trim().replace(" ", "+");
+        Document doc = null;
+        List<MusicModel> modelList = new ArrayList<>();
+
+
+        try {
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
+            doc = Jsoup.connect(url1 + search_str).get();
+            //Elements elements = doc.select("div#items > div");
+            Elements elements = doc.select("div");
+            List<Node> node=elements.get(1).parentNode().childNodes();
+
+            for(int i=0; i<node.size();i++) {
+                title = node.get(i).attr("title");
+                if(title.length()>0){
+                    videoId = (node.get(i).attr("href")).substring(7);
+                    photo="https://i.ytimg.com/vi/"+videoId+"/hqdefault.jpg";
+                    if(giveMe(videoId)!=null){
+                        MusicModel model = new MusicModel();
+                        model.setVideo_id_list(giveMe(videoId));
+                        model.setPhoto_url_list(photo);
+                        model.setTitle_list(title);
+                        modelList.add(model);
+                    }
+
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.getStackTrace();
+            e.getMessage();
+        }
+
+        return modelList;
+    }
+    @Override
+    public List<MusicModel> searchSarkiyukle(String searchQuery) {
+
+
+
+        String url1 = decodeStrings("aHR0cHM6Ly9zYXJraXl1a2xlaW5kaXIuY29tL2FyYW1hLnBocD9xPQ==");
+
+        String search_str = searchQuery.trim().replace(" ", "+");
+        Document doc = null;
+        List<MusicModel> modelList = new ArrayList<>();
+
+
+        try {
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
+            doc = Jsoup.connect(url1 + search_str).get();
+            //Elements elements = doc.select("div#items > div");
+            Elements elements = doc.select("div");
+            List<Node> node=elements.get(1).parentNode().childNodes();
+
+            for(int i=0; i<node.size();i++) {
+                title = node.get(i).attr("title");
+                if(title.length()>0){
+                    videoId = (node.get(i).attr("href")).substring(7);
+                    photo="https://i.ytimg.com/vi/"+videoId+"/hqdefault.jpg";
+                    MusicModel model = new MusicModel();
+                    model.setVideo_id_list(videoId);
+                    model.setPhoto_url_list(photo);
+                    model.setTitle_list(title);
+                    modelList.add(model);
+                }
+
+            }
+
+        } catch (Exception e) {
+        }
+
+        return modelList;
+    }
+
+    @Override
+    public List<MusicModel> popularTr() {
 
         String url_tr = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS95ZXJsaS1wb3B1bGVyLXNhcmtpbGFyLw==");
         Document doc = null;
-        List<Model> modelList = new ArrayList<>();
+        List<MusicModel> modelList = new ArrayList<>();
 
         try {
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
             doc = Jsoup.connect(url_tr).get();
             Elements elements = doc.select("div#primary").select("div.post-thumb");
             for (Element element : elements) {
                 photo = element.select("img").attr("src");
                 title = element.select("img").attr("title");
                 videoId = getVideoIdfromImgUrl(photo);
-                Model model = new Model();
+                MusicModel model = new MusicModel();
                 model.setPhoto_url_list(photo);
                 model.setVideo_id_list(videoId);
                 model.setTitle_list(title);
@@ -81,21 +278,24 @@ public class MainImpl implements MainRepository {
         return modelList;
     }
 
+
+
     @Override
-    public List<Model> popularWr() {
+    public List<MusicModel> popularWr() {
 
         String url_wr = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS95YWJhbmNpLXBvcHVsZXItc2Fya2lsYXIv");
         Document doc = null;
-        List<Model> modelList = new ArrayList<>();
+        List<MusicModel> modelList = new ArrayList<>();
 
         try {
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
             doc = Jsoup.connect(url_wr).get();
             Elements elements = doc.select("div#primary").select("div.post-thumb");
             for (Element element : elements) {
                 photo = element.select("img").attr("src");
                 title = element.select("img").attr("title");
                 videoId = getVideoIdfromImgUrl(photo);
-                Model model = new Model();
+                MusicModel model = new MusicModel();
                 model.setPhoto_url_list(photo);
                 model.setVideo_id_list(videoId);
                 model.setTitle_list(title);
@@ -128,9 +328,11 @@ public class MainImpl implements MainRepository {
             if (success && type.equals("download")) {
                 yt_url = mainjsonObj.getString("url");
             } else
-                return "Song Not Found";
+                //return "Song Not Found";
+                return null;
         } catch (Exception e1) {
-            return "Error occured";
+            //return "Error occured";
+            return null;
         }
 
 
@@ -155,4 +357,5 @@ public class MainImpl implements MainRepository {
         String videoIdd = imageurl.substring(start_index, hq_index);
         return videoIdd;
     }
+
 }

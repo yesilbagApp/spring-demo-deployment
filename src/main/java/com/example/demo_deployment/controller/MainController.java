@@ -1,6 +1,7 @@
 package com.example.demo_deployment.controller;
 
-import com.example.demo_deployment.domain.Model;
+import com.example.demo_deployment.domain.ApkControlModel;
+import com.example.demo_deployment.domain.MusicModel;
 import com.example.demo_deployment.repository.MainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +16,48 @@ public class MainController {
     @Autowired
     private MainRepository mainRepository;
 
-    @GetMapping("/{searchRequest}")
-    private List<Model> search(@PathVariable String searchRequest) {
-        return mainRepository.search(searchRequest);
+    @GetMapping("merged/{searchRequest}")
+    private List<MusicModel> searchMerged(@PathVariable String searchRequest) {
+        return mainRepository.searchMerged(searchRequest);
+    }
+
+    @GetMapping("tbdy/{searchRequest}")
+    private List<MusicModel> searchTbdy(@PathVariable String searchRequest) {
+        return mainRepository.searchTbdy(searchRequest);
+    }
+
+    @GetMapping("apkControl")
+    private List<ApkControlModel> apkControl() {
+        return mainRepository.apkControl();
+    }
+
+    @GetMapping("tbzy/{searchRequest}")
+    private List<MusicModel> searchTbzy(@PathVariable String searchRequest) {
+        return mainRepository.searchTbzy(searchRequest);
+    }
+
+    @GetMapping("tbzy2/{searchRequest}")
+    private List<MusicModel> searchTbzy2(@PathVariable String searchRequest) {
+        return mainRepository.searchTbzy2(searchRequest);
+    }
+
+    @GetMapping("sarkiyukle/{searchRequest}")
+    private List<MusicModel> searchSarkiyukle(@PathVariable String searchRequest) {
+        return mainRepository.searchSarkiyukle(searchRequest);
+    }
+
+    @GetMapping("sarkiyukle2/{searchRequest}")
+    private List<MusicModel> searchSarkiyukle2(@PathVariable String searchRequest) {
+        return mainRepository.searchSarkiyukle2(searchRequest);
     }
 
     @GetMapping("/popular/wr")
-    private List<Model> popularWr() {
+    private List<MusicModel> popularWr() {
         return mainRepository.popularWr();
     }
 
     @GetMapping("/popular/tr")
-    private List<Model> popularTr() {
+    private List<MusicModel> popularTr() {
         return mainRepository.popularTr();
     }
 
@@ -34,4 +65,6 @@ public class MainController {
     public String  giveMe(@PathVariable String request){
         return mainRepository.giveMe(request);
     }
+
+
 }
