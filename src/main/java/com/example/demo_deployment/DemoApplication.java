@@ -20,9 +20,9 @@ import org.apache.tomcat.util.codec.binary.Base64;
 @SpringBootApplication
 @RestController
 public class DemoApplication {
-	//dsdsdds
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
+
 	}
 }
