@@ -16,7 +16,7 @@ public class MainController {
     @Autowired
     private MainRepository mainRepository;
 
-    @GetMapping("merged/{searchRequest}")
+    @GetMapping("searchmerged/{searchRequest}")
     private List<MusicModel> searchMerged(@PathVariable String searchRequest) {
         return mainRepository.searchMerged(searchRequest);
     }
@@ -26,7 +26,7 @@ public class MainController {
         return mainRepository.searchTbdy(searchRequest);
     }
 
-    @GetMapping("apkControl")
+    @GetMapping("apkcontrol")
     private List<ApkControlModel> apkControl() {
         return mainRepository.apkControl();
     }
