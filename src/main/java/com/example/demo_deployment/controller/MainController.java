@@ -51,7 +51,7 @@ public class MainController {
         return mainRepository.searchSarkiyukle2(searchRequest);
     }
 
-    @GetMapping("/popular/wrr")
+    @GetMapping("/popular/wr")
     private List<MusicModel> popularWr() {
         return mainRepository.popularWr();
     }
