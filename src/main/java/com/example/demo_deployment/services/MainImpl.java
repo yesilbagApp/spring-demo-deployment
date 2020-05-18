@@ -234,6 +234,7 @@ public class MainImpl implements MainRepository {
 
             for(int i=0; i<node.size();i++) {
                 title = node.get(i).attr("title");
+                //sarkiyukle sitesinde title i olan node larda videoId var . Bu yüzden bu sekilde yazıldı.
                 if(title.length()>0){
                     videoId = (node.get(i).attr("href")).substring(7);
                     photo="https://i.ytimg.com/vi/"+videoId+"/hqdefault.jpg";
@@ -267,11 +268,13 @@ public class MainImpl implements MainRepository {
                 photo = element.select("img").attr("src");
                 title = element.select("img").attr("title");
                 videoId = getVideoIdfromImgUrl(photo);
-                MusicModel model = new MusicModel();
-                model.setPhoto_url_list(photo);
-                model.setVideo_id_list(videoId);
-                model.setTitle_list(title);
-                modelList.add(model);
+                if(giveMe(videoId)!=null){
+                    MusicModel model = new MusicModel();
+                    model.setVideo_id_list(giveMe(videoId));
+                    model.setPhoto_url_list(photo);
+                    model.setTitle_list(title);
+                    modelList.add(model);
+                }
             }
         } catch (Exception e) {
         }
@@ -295,12 +298,14 @@ public class MainImpl implements MainRepository {
                 photo = element.select("img").attr("src");
                 title = element.select("img").attr("title");
                 videoId = getVideoIdfromImgUrl(photo);
-                MusicModel model = new MusicModel();
-                model.setPhoto_url_list(photo);
-                model.setVideo_id_list(videoId);
-                model.setTitle_list(title);
-                modelList.add(model);
-            }
+                if(giveMe(videoId)!=null){
+                    MusicModel model = new MusicModel();
+                    model.setVideo_id_list(giveMe(videoId));
+                    model.setPhoto_url_list(photo);
+                    model.setTitle_list(title);
+                    modelList.add(model);
+                }
+             }
         } catch (Exception e) {
         }
 
