@@ -61,51 +61,18 @@ public class MainImpl implements MainRepository {
         List<MusicModel> model2;
 
 
-        model1=searchSarkiyukle2(searchQuery);
+        model1=searchSarkiyukle(searchQuery);
 
         if(model1.size()>0){
             model=model1;
         } else {
-            model=searchTbzy2(searchQuery);
+            model=searchTbzy(searchQuery);
         }
 
         return model;
     }
 
-    @Override
-    public List<MusicModel> searchTbzy2(String searchQuery) {
 
-        //String url1 = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS9hcmFtYS8/YXJhPQ==");
-        String url1 = decodeStrings("aHR0cHM6Ly90dWJhenkuY29tLz9hcmE9");
-        String search_str = searchQuery.trim().replace(" ", "+");
-        Document doc = null;
-        List<MusicModel> modelList = new ArrayList<>();
-
-
-        try {
-            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
-            doc = Jsoup.connect(url1 + search_str).get();
-            Elements elements = doc.select("div#items > div");
-
-            for (Element element : elements) {
-                photo = element.select("img").attr("src");
-                title = element.select("img").attr("title");
-                videoId = getVideoIdfromImgUrl(photo);
-                if(giveMe(videoId)!=null){
-                    MusicModel model = new MusicModel();
-                    model.setPhoto_url_list(photo);
-                    model.setVideo_id_list(giveMe(videoId));
-                    model.setTitle_list(title);
-                    modelList.add(model);
-                }
-
-            }
-
-        } catch (Exception e) {
-        }
-
-        return modelList;
-    }
 
     @Override
     public List<MusicModel> searchTbzy(String searchQuery) {
@@ -170,49 +137,7 @@ public class MainImpl implements MainRepository {
         return modelList;
     }
 
-    @Override
-    public List<MusicModel> searchSarkiyukle2(String searchQuery) {
 
-
-
-        String url1 = decodeStrings("aHR0cHM6Ly9zYXJraXl1a2xlaW5kaXIuY29tL2FyYW1hLnBocD9xPQ==");
-
-        String search_str = searchQuery.trim().replace(" ", "+");
-        Document doc = null;
-        List<MusicModel> modelList = new ArrayList<>();
-
-
-        try {
-            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
-            doc = Jsoup.connect(url1 + search_str).get();
-            //Elements elements = doc.select("div#items > div");
-            Elements elements = doc.select("div");
-            List<Node> node=elements.get(1).parentNode().childNodes();
-
-            for(int i=0; i<node.size();i++) {
-                title = node.get(i).attr("title");
-                if(title.length()>0){
-                    videoId = (node.get(i).attr("href")).substring(7);
-                    photo="https://i.ytimg.com/vi/"+videoId+"/hqdefault.jpg";
-                    if(giveMe(videoId)!=null){
-                        MusicModel model = new MusicModel();
-                        model.setVideo_id_list(giveMe(videoId));
-                        model.setPhoto_url_list(photo);
-                        model.setTitle_list(title);
-                        modelList.add(model);
-                    }
-
-                }
-
-            }
-
-        } catch (Exception e) {
-            e.getStackTrace();
-            e.getMessage();
-        }
-
-        return modelList;
-    }
     @Override
     public List<MusicModel> searchSarkiyukle(String searchQuery) {
 
@@ -268,13 +193,13 @@ public class MainImpl implements MainRepository {
                 photo = element.select("img").attr("src");
                 title = element.select("img").attr("title");
                 videoId = getVideoIdfromImgUrl(photo);
-                if(giveMe(videoId)!=null){
+
                     MusicModel model = new MusicModel();
-                    model.setVideo_id_list(giveMe(videoId));
+                    model.setVideo_id_list((videoId));
                     model.setPhoto_url_list(photo);
                     model.setTitle_list(title);
                     modelList.add(model);
-                }
+
             }
         } catch (Exception e) {
         }
@@ -298,13 +223,12 @@ public class MainImpl implements MainRepository {
                 photo = element.select("img").attr("src");
                 title = element.select("img").attr("title");
                 videoId = getVideoIdfromImgUrl(photo);
-                if(giveMe(videoId)!=null){
                     MusicModel model = new MusicModel();
-                    model.setVideo_id_list(giveMe(videoId));
+                    model.setVideo_id_list((videoId));
                     model.setPhoto_url_list(photo);
                     model.setTitle_list(title);
                     modelList.add(model);
-                }
+
              }
         } catch (Exception e) {
         }

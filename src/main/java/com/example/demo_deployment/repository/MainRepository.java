@@ -12,15 +12,11 @@ public interface MainRepository {
 
      List<MusicModel> searchMerged(String searchQuery);
 
-     List<MusicModel> searchSarkiyukle2(String searchQuery);
-
-     List<MusicModel> searchSarkiyukle(String searchQuery);
+   List<MusicModel> searchSarkiyukle(String searchQuery);
 
      List<ApkControlModel> apkControl();
 
-     List<MusicModel> searchTbzy2(String searchQuery);
-
-     List<MusicModel> searchTbzy(String searchQuery);
+       List<MusicModel> searchTbzy(String searchQuery);
 
      List<MusicModel> searchTbdy(String searchQuery);
 
