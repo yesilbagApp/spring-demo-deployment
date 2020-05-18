@@ -36,20 +36,12 @@ public class MainController {
         return mainRepository.searchTbzy(searchRequest);
     }
 
-    @GetMapping("tbzy2/{searchRequest}")
-    private List<MusicModel> searchTbzy2(@PathVariable String searchRequest) {
-        return mainRepository.searchTbzy2(searchRequest);
-    }
 
     @GetMapping("sarkiyukle/{searchRequest}")
     private List<MusicModel> searchSarkiyukle(@PathVariable String searchRequest) {
         return mainRepository.searchSarkiyukle(searchRequest);
     }
 
-    @GetMapping("sarkiyukle2/{searchRequest}")
-    private List<MusicModel> searchSarkiyukle2(@PathVariable String searchRequest) {
-        return mainRepository.searchSarkiyukle2(searchRequest);
-    }
 
     @GetMapping("/popular/wr")
     private List<MusicModel> popularWr() {
