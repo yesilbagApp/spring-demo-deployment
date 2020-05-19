@@ -169,7 +169,6 @@ public class MainImpl implements MainRepository {
                     model.setTitle_list(title);
                     modelList.add(model);
                 }
-
             }
 
         } catch (Exception e) {
