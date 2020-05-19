@@ -37,7 +37,7 @@ public class MainImpl implements MainRepository {
         // Uygulama yayından kaldırıldıysa false yapılıp not yazılır ve yeni uygulamanın store adresi verilir.
 
         Boolean apkAktifPasif=true;
-        String not="Yeni Uygulamamızı indirmek için tıklayınız !";
+        String not="Yeni Uygulamamızı indirmek için tıklayınız !!!";
         String yeniApkAdres="market://details?id=ts.myt.memoo";
 
 
