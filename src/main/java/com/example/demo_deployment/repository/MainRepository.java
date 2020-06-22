@@ -10,7 +10,9 @@ import java.util.List;
 public interface MainRepository {
 
 
-     List<MusicModel> searchMerged(String searchQuery);
+    List<ApkControlModel> apkControl2();
+
+    List<MusicModel> searchMerged(String searchQuery);
 
    List<MusicModel> searchSarkiyukle(String searchQuery);
 
@@ -18,7 +20,9 @@ public interface MainRepository {
 
        List<MusicModel> searchTbzy(String searchQuery);
 
-     List<MusicModel> searchTbdy(String searchQuery);
+    List<MusicModel> searchTbdyhd(String searchQuery);
+
+    List<MusicModel> searchTbdy(String searchQuery);
 
      List<MusicModel> popularTr();
 

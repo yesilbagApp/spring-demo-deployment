@@ -21,6 +21,11 @@ public class MainController {
         return mainRepository.searchMerged(searchRequest);
     }
 
+    @GetMapping("tbdyhd/{searchRequest}")
+    private List<MusicModel> searchTbdyhd(@PathVariable String searchRequest) {
+        return mainRepository.searchTbdyhd(searchRequest);
+    }
+
     @GetMapping("tbdy/{searchRequest}")
     private List<MusicModel> searchTbdy(@PathVariable String searchRequest) {
         return mainRepository.searchTbdy(searchRequest);
@@ -29,6 +34,11 @@ public class MainController {
     @GetMapping("apkcontrol")
     private List<ApkControlModel> apkControl() {
         return mainRepository.apkControl();
+    }
+
+    @GetMapping("apkcontrol2")
+    private List<ApkControlModel> apkControl2() {
+        return mainRepository.apkControl2();
     }
 
     @GetMapping("tbzy/{searchRequest}")

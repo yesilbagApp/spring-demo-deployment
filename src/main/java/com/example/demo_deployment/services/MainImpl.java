@@ -32,12 +32,38 @@ public class MainImpl implements MainRepository {
 
     @Override
     public List<ApkControlModel> apkControl() {
-
+        // ytb 1 - myt müzik evreni uygulamasının kontrolü
         //apkAktifPasif=true ise apkAktif çalışıyor demektir.
         // Uygulama yayından kaldırıldıysa false yapılıp not yazılır ve yeni uygulamanın store adresi verilir.
 
         Boolean apkAktifPasif=true;
         String not="Yeni Uygulamamızı indirmek için tıklayınız !!!";
+        String yeniApkAdres="market://details?id=ts.myt.memoo";
+
+
+        List<ApkControlModel> apkControlModelList = new ArrayList<>();
+
+        try {
+            ApkControlModel model = new ApkControlModel();
+            model.setNot(not);
+            model.setYeniApkAdres(yeniApkAdres);
+            model.setApkAktifPasif(apkAktifPasif);
+            apkControlModelList.add(model);
+
+        } catch (Exception e) {
+        }
+        return apkControlModelList;
+    }
+
+    @Override
+    public List<ApkControlModel> apkControl2() {
+
+        // ytb 2 myt memoo uygulamasının kontrolü
+        //apkAktifPasif=true ise apkAktif çalışıyor demektir.
+        // Uygulama yayından kaldırıldıysa false yapılıp not yazılır ve yeni uygulamanın store adresi verilir.
+
+        Boolean apkAktifPasif=true;
+        String not="Yeni Uygulamamızı indirmek için tıklayınız...!";
         String yeniApkAdres="market://details?id=ts.myt.memoo";
 
 
@@ -106,6 +132,37 @@ public class MainImpl implements MainRepository {
         return modelList;
     }
 
+    @Override
+    public List<MusicModel> searchTbdyhd(String searchQuery) {
+
+        //String url1 = decodeStrings("aHR0cHM6Ly93d3cudHViaWR5Y2VwLmNvbS9hcmFtYS8/YXJhPQ==");
+        String url1 = decodeStrings("aHR0cHM6Ly90dWJpZHloZC5jb20vc2VhcmNoLXZpZGVvLw==");
+        String search_str = searchQuery.trim().replace(" ", "+");
+        Document doc = null;
+        List<MusicModel> modelList = new ArrayList<>();
+
+
+        try {
+            System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
+            doc = Jsoup.connect(url1 + search_str).get();
+            Elements elements = doc.select("div");
+
+            for (Element element : elements) {
+                photo = element.select("img").attr("src");
+                title = element.select("img").attr("title");
+                videoId = getVideoIdfromImgUrl(photo);
+                MusicModel model = new MusicModel();
+                model.setPhoto_url_list(photo);
+                model.setVideo_id_list(videoId);
+                model.setTitle_list(title);
+                modelList.add(model);
+            }
+
+        } catch (Exception e) {
+        }
+
+        return modelList;
+    }
     @Override
     public List<MusicModel> searchTbdy(String searchQuery) {
 
